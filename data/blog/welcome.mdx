@@ -1,0 +1,137 @@
+---
+title: 'git'
+thumbSrc: '/static/images/welcome.webp'
+date: '2022-02-25'
+tags: ['FE']
+draft: false
+summary: 'git정리'
+images: ['/static/images/welcome.webp']
+---
+
+# 📌 목차
+
+- **git**
+
+---
+
+# Git
+
+버전을 편리하게 관리할 수 있도록 작업하고 있는 파일들을 원하는 시점으로 돌아갈 수 있게 만들어주는 버전 관리 시스템
+
+- git 설치하는법
+
+git 공식 사이트 https://git-scm.com/에서 운영체제 선택하여 다운로드  
+git ui도구 소스 트리 sourcetree https://www.sourcetreeapp.com/에서 운영체제 선택하여 다운로드
+
+- git 설치 전 터미널 준비
+
+컴퓨터에 git 설치되어있는지 확인 - 터미널에서 git --version 입력
+
+- git처음 설정해야 할 것
+
+터미널에서 git config --list 작성하면 모든 설정 확인할 수 있음
+
+- 텍스트 에디터 연결
+
+code . 입력하면 visual studio code로 연결  
+git config --global core.editor "code" 코드를 에디터와 연동해서 사용  
+git config --global core.editor "code --wait" 열린 파일이 종료되기 전까지 다른 명령어 수행 불가능
+
+- git 사용자 관련 정보 설정
+
+git config --global user.name "asdf" 사용자 이름 설정  
+git config --global user.email "asdf@gmail.com" 사용자 이메일 설정  
+git config --global user.name 사용자 이름 출력  
+git config --global core.autocrlf true (window사용시 true, mac사용시 input) 다양한 운영체제에서 사용하는 경우에 사용
+
+- git 공부
+
+git 공식 사이트 documentation->reference  
+git에서 사용 가능한 명령어 목록 https://git-scm.com/docs 자주 쓰이는 명령어 위주로 공부  
+각각의 명령어를 클릭하면 사용 가능한 모든 옵션을 확인할 수 있음
+
+- git 자주 사용되는 키워드
+
+repository 또는 repo: 저장소 / Git으로 버전 관리하는 디렉토리를 의미  
+local repository: 로컬 저장소 / 작업자의 개발 환경(PC)에 설정된 Git 저장소  
+remote repository: 원격 저장소 / GitHub 등 외부 서버에 설정된 Git 저장소  
+commit: 커밋 / 특정 상태를 기록한 것, 즉 버전을 의미  
+branch: 브랜치 / 한국어로 번역하면 가지치기 또는 갈래라고 하는데 또 다른 작업공간을 의미  
+merge: 머지 / 한국어로 병합 또는 합치기라고 하는데 특정 브랜치에서 작업한 내용을 또 다른 브랜치에 적용하는 것을 의미
+
+- git 초기화/삭제하기
+
+```
+mkdir git git폴더 생성
+cd git git폴더로 경로변경
+git init git 초기화
+ls-al 폴더 내용 확인
+rm -rf .git git 삭제
+git status git 상태확인
+```
+
+- git workflow
+
+working directory 프로젝트 폴더에서 a, b파일이 준비되었을 경우 staging area로 옮기게 된다  
+.git directory에 저장되고 저장된 git history는 내 PC에만 저장되기 때문에  
+push라는 명령어를 이용해서 나의 git directory를 서버에 업로드할 수 있다  
+서버에서 로컬로 다운로드하고 싶을 때는 pull이라는 명령어 이용  
+각각의 버전에 어떤 정보가 들어있는지 살펴보면 고유한 해쉬코드 부과됨  
+버전에 관련된 메시지와 누가 작성했는지 날짜와 시간 정보도 포함  
+working diretory에서 untracked와 tracked로 나눌 수 있음 git이 이미 알고 있는 파일이라면
+tracked, 트래킹이 되지 않은 파일이라면 untracked로 나눌 수 있음
+트래킹하고 있는 파일 중에서도 unmodified 수정되지 않은 파일과 modified 수정된 파일로 나뉠 수 있음
+수정된 파일만(modified) staging area로 옮겨갈 수 있다
+
+- git add
+
+echo hello world! > a.txt
+open . 폴더 열기
+git status 현재 파일 상태 확인
+untracked된 파일 a.txt
+git add a.txt a파일 추가
+git staus 확인 changes to be committed new file a.txt
+echo asdf >> a.txt a파일에 asdf추가
+git status 확인하면 modified a.txt (수정된 a파일 확인)
+git add a.txt a파일 추가
+a파일이 staging area로 옮겨진 것을 확인할 수 있음
+git rm --chached \* 전체 파일 untracked된 상태로 돌아옴 working directory로 다시 옮겨짐
+git add \* 폴더에 있는 모든 파일들을 staging area로 옮김
+ls 폴더 확인
+rm a.txt a파일 삭제
+git add . 모든 파일 포함해서 git staging area에 추가됨
+
+- gitignore
+
+echo styling > style.css 파일 생성  
+echo log > log.log  
+git status 파일 상태 확인  
+트래킹 하고 싶지 않은 파일들 gitignore에 추가  
+echo \*.log > .gitignore .log로 된 모든 파일 git ignore에 추가  
+git status로 확인하면 unracked files에 포함  
+git status -h 함께 실행할 수 있는 모든 옵션 확인  
+git status -s 파일 상태 간단한 버전으로 확인 A-staginig area에 추가된 파일 ??-untracked파일
+
+- git diff 어떤 파일이 수정되었는지 확인
+
+cat c.txt c파일 내용 확인  
+@@ -1 +1,2 @@ (-1 이전파일 첫번째 줄 +1,2 현재파일 2번째 줄까지 확인)  
+hello world!  
++add (add가 추가됨)  
+git diff -h 옵션확인  
+원하는 ui와 연결하기  
+git config --global -e  
+tool = vscode  
+cmd = code--wait --diff $LOCAL $REMOTE  
+dif difftool Launch 'vscode' 나오면 y로 실행  
+dif difftool --staged staging area에 있는 파일 비교 확인
+
+- git commit
+
+staging area에 있는 파일을 git repository에 옮겨준다  
+git log history확인  
+echo add >> c.txxt  
+git status -s  
+git add . 파일 전부 추가  
+git commmit -m "second commit" second commit이라는 메시지 추가하고 commit  
+git commit -am "third commit" 모든파일을 메시지와 함께 commit
